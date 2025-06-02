@@ -1,0 +1,30 @@
+Act as a senior developer. Use Chain-of-Thought reasoning to:
+
+    - Analyze the following project requirements step-by-step.
+    - List key criteria.
+    - Compare 3 potential database types against these criteria.
+    - Justify your final recommendation with clear reasoning.
+
+Project Requirements:
+
+    - Social platform with millions of users
+    - Need to store profiles, posts, and connections between users
+    - High data read speed required
+    - Expected 80% read operations, 20% write operations
+    - Scalability is important as the user base grows
+
+Respond in this structured format:
+
+    Requirement Analysis: [Break down each requirement]
+
+    Key Criteria: [List decision factors]
+
+    Database Comparison:
+
+        Option 1: [Pros/cons for this use case]
+
+        Option 2: [Pros/cons]
+
+        Option 3: [Pros/cons]
+
+    Recommendation: [Final choice + justification] 
