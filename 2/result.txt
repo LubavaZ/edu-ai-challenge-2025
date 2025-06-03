@@ -1,0 +1,42 @@
+# Bug Report: Logout Button Non-Responsive in Safari Browser
+
+## Description
+The logout button functionality is completely non-responsive when using the Safari browser. Users are unable to log out of their accounts, which affects their ability to switch accounts or end their sessions properly.
+
+## Steps to Reproduce
+1. Open the application in Safari browser
+2. Log in to any user account
+3. Navigate to any page where the logout button is visible
+4. Click on the logout button
+5. Observe that no action occurs
+
+## Expected vs Actual Behavior
+**Expected:**
+- Clicking the logout button should trigger the logout process
+- User should be redirected to the login page
+- Session should be terminated
+
+**Actual:**
+- Clicking the logout button produces no response
+- No visual feedback is provided
+- User remains logged in
+- No error messages are displayed
+
+## Environment
+- Browser: Safari (latest version)
+- Operating System: macOS (version not specified)
+- Device: Desktop
+- Application Version: Not specified
+
+## Severity: High
+**Impact:**
+- Users cannot log out of their accounts
+- Potential security concern as users cannot terminate their sessions
+- Affects user experience and account management
+- May lead to session management issues
+
+## Additional Notes
+- Issue appears to be Safari-specific
+- No console errors observed
+- Issue is reproducible consistently
+- Other browsers (Chrome, Firefox) are not affected 

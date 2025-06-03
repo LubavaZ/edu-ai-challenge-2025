@@ -1,0 +1,11 @@
+A bug was found during QA testing: logout button doesn't work on Safari. It just doesn't respond
+Act as a QA specialist. Create a clear, well-structured bug ticket for developer.
+
+Respond in this sctructured format (it will be the content of the bug ticket):
+
+- Title
+- Description
+- Steps to Reproduce
+- Expected vs Actual Behavior
+- Environment (if known)
+- Severity or Impact 
