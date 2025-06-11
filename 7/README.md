@@ -32,6 +32,15 @@ To start the game:
 npm start
 ```
 
+## Building the Project
+
+Before running the game, ensure the project is built:
+```bash
+npm run build
+```
+
+This command compiles the TypeScript code into JavaScript in the `dist` directory.
+
 ## Running Tests
 
 To run the test suite:
@@ -75,4 +84,4 @@ The project uses:
 
 ## License
 
-MIT 
+MIT
