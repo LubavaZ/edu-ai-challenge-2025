@@ -16,30 +16,39 @@ A modern implementation of the classic Sea Battle (Battleship) game using TypeSc
 - Node.js (v14 or higher)
 - npm (v6 or higher)
 
-## Installation
+## Installation and Setup
 
-1. Clone the repository
-2. Navigate to the project directory
-3. Install dependencies:
-```bash
-npm install
-```
+1. **Install Dependencies**
+   ```bash
+   npm install
+   ```
 
-## Running the Game
+2. **Install TypeScript Globally** (if not already installed)
+   ```bash
+   npm install -g typescript
+   ```
 
-To start the game:
-```bash
-npm start
-```
+## How to Play
 
-## Building the Project
+1. **Build the Project**
+   ```bash
+   npm run build
+   ```
+   This compiles the TypeScript code into JavaScript in the `dist` directory.
 
-Before running the game, ensure the project is built:
-```bash
-npm run build
-```
+2. **Start the Game**
+   ```bash
+   npm start
+   ```
 
-This command compiles the TypeScript code into JavaScript in the `dist` directory.
+3. **Game Instructions**
+   - The game will display two boards: your board and the opponent's board
+   - Enter coordinates as two digits (e.g., "00", "34", "98")
+   - First digit is the row (0-9)
+   - Second digit is the column (0-9)
+   - 'X' marks a hit
+   - 'O' marks a miss
+   - 'S' shows your ships (only visible on your board)
 
 ## Running Tests
 
