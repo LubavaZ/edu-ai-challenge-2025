@@ -6,6 +6,8 @@
   "types": "dist/validator.d.ts",
   "scripts": {
     "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc -w",
     "test": "jest",
     "test:coverage": "jest --coverage"
   },
