@@ -1,0 +1,22 @@
+{
+  "name": "service-analyzer",
+  "version": "1.0.0",
+  "description": "A console application to generate comprehensive reports on services or products.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "cli",
+    "openai",
+    "report-generator"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.2",
+    "dotenv": "^16.4.5",
+    "yargs": "^17.7.2"
+  }
+} 
