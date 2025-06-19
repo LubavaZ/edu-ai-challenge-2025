@@ -17,7 +17,7 @@ const openai = new OpenAI({
 
 const searchProducts = (args) => {
   let filteredProducts = [...products];
-  const { category, maxPrice, minRating, inStock } = args;
+  const { category, maxPrice, minRating, inStock, keywords } = args;
 
   if (category) {
     filteredProducts = filteredProducts.filter(product => product.category.toLowerCase() === category.toLowerCase());
@@ -31,6 +31,13 @@ const searchProducts = (args) => {
   if (inStock) {
     filteredProducts = filteredProducts.filter(product => product.in_stock === inStock);
   }
+  if (keywords) {
+    const searchTerms = keywords.toLowerCase().split(' ');
+    filteredProducts = filteredProducts.filter(product => {
+      const productName = product.name.toLowerCase();
+      return searchTerms.some(term => productName.includes(term));
+    });
+  }
 
   return filteredProducts;
 };
@@ -40,25 +47,21 @@ const tools = [
     type: "function",
     function: {
       name: "searchProducts",
-      description: "Searches for products based on specified criteria",
+      description: "Searches for products based on specified criteria. Do not make assumptions about parameters that are not specified by the user.",
       parameters: {
         type: "object",
         properties: {
+          keywords: {
+            type: "string",
+            description: "Keywords from the user's query to search for in the product name (e.g., 'smartphone', 'oven')."
+          },
           category: {
             type: "string",
-            description: "The category of the product",
+            description: "The category of the product. Available categories are: Electronics, Fitness, Kitchen, Books, Clothing.",
           },
           maxPrice: {
             type: "number",
             description: "The maximum price of the product",
-          },
-          minRating: {
-            type: "number",
-            description: "The minimum rating of the product",
-          },
-          inStock: {
-            type: "boolean",
-            description: "Whether the product is in stock",
           },
         },
         required: [],
@@ -73,7 +76,7 @@ const tools = [
   const messages = [
     {
       role: "system",
-      content: "You are a helpful assistant that helps users find products based on their preferences. You have access to a product search function. Use it to find products based on the user's query. If a user does not specify a filter, do not include it in your function call.",
+      content: "You are a helpful assistant that helps users find products based on their preferences. You have access to a product search function. Use it to find products based on the user's query. If a user does not specify a filter, do not include it in your function call. If a user's query implies that they are looking for a product that is out of stock, you should set the inStock parameter to false. Do not infer values for parameters that are not explicitly mentioned by the user.",
     },
     {
       role: "user",
