@@ -17,7 +17,7 @@ const openai = new OpenAI({
 
 const searchProducts = (args) => {
   let filteredProducts = [...products];
-  const { category, maxPrice, minRating, inStock, keywords } = args;
+  const { category, maxPrice, minPrice, minRating, maxRating, inStock, keywords } = args;
 
   if (category) {
     filteredProducts = filteredProducts.filter(product => product.category.toLowerCase() === category.toLowerCase());
@@ -25,17 +25,27 @@ const searchProducts = (args) => {
   if (maxPrice) {
     filteredProducts = filteredProducts.filter(product => product.price <= maxPrice);
   }
-  if (minRating) {
-    filteredProducts = filteredProducts.filter(product => product.rating >= minRating);
+  if (minPrice) {
+    filteredProducts = filteredProducts.filter(product => product.price >= minPrice);
   }
-  if (inStock) {
+  if (minRating) {
+    filteredProducts = filteredProducts.filter(product => product.rating > minRating);
+  }
+  if (maxRating) {
+    filteredProducts = filteredProducts.filter(product => product.rating < maxRating);
+  }
+  if (inStock !== undefined) {
     filteredProducts = filteredProducts.filter(product => product.in_stock === inStock);
   }
   if (keywords) {
     const searchTerms = keywords.toLowerCase().split(' ');
     filteredProducts = filteredProducts.filter(product => {
       const productName = product.name.toLowerCase();
-      return searchTerms.some(term => productName.includes(term));
+      return searchTerms.every(term => {
+        const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const regex = new RegExp(`\\b${escapedTerm}\\b`);
+        return regex.test(productName);
+      });
     });
   }
 
@@ -53,7 +63,7 @@ const tools = [
         properties: {
           keywords: {
             type: "string",
-            description: "Keywords from the user's query to search for in the product name (e.g., 'smartphone', 'oven')."
+            description: "Specific words from the user's query to filter by product name. For example, if the user asks for 'men's clothing', you should use 'men's' as a keyword to distinguish it from 'women's clothing'."
           },
           category: {
             type: "string",
@@ -62,6 +72,22 @@ const tools = [
           maxPrice: {
             type: "number",
             description: "The maximum price of the product",
+          },
+          minPrice: {
+            type: "number",
+            description: "The minimum price of the product",
+          },
+          minRating: {
+            type: "number",
+            description: "The minimum rating of the product (e.g. 4.5)."
+          },
+          maxRating: {
+            type: "number",
+            description: "The maximum rating of the product."
+          },
+          inStock: {
+            type: "boolean",
+            description: "Filter by stock availability. Set to true for in-stock products, false for out-of-stock products."
           },
         },
         required: [],
@@ -76,7 +102,7 @@ const tools = [
   const messages = [
     {
       role: "system",
-      content: "You are a helpful assistant that helps users find products based on their preferences. You have access to a product search function. Use it to find products based on the user's query. If a user does not specify a filter, do not include it in your function call. If a user's query implies that they are looking for a product that is out of stock, you should set the inStock parameter to false. Do not infer values for parameters that are not explicitly mentioned by the user.",
+      content: "You are a helpful assistant that helps users find products based on their preferences. You have access to a product search function. Use it to find products based on the user's query. If a user does not specify a filter, do not include it in your function call. If a user's query implies that they are looking for a product that is out of stock, you should set the inStock parameter to false. Do not infer values for parameters that are not explicitly mentioned by the user. Pay close attention to descriptive words in the user's query (e.g., 'men's', 'women's', 'gaming', 'wireless') and use the `keywords` parameter to refine the search within categories.",
     },
     {
       role: "user",
